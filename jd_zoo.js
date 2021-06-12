@@ -85,11 +85,11 @@ if ($.isNode()) {
     }
   }
   let res = [], res2 = [], res3 = [];
-  res3 = await getAuthorShareCode('https://raw.githubusercontent.com/ElsaKing/updateTeam/main/shareCodes/jd_zoo.json');
-  if (!res3) await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/ElsaKing/updateTeam/main/shareCodes/jd_zoo.json')
+  res3 = await getAuthorShareCode('https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json');
+  if (!res3) await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json')
   if (new Date().getHours()>= 9) {
     res = await getAuthorShareCode() || [];
-    res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/ElsaKing/updateTeam/main/shareCodes/jd_zoo.json') || [];
+    res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json') || [];
   }
   // if (new Date().getHours() === 9 ||  (new Date().getHours() === 10 && new Date().getMinutes() < 20)) {
   // }
@@ -870,7 +870,7 @@ function getRandomArrayElements(arr, count) {
   }
   return shuffled.slice(min);
 }
-function getAuthorShareCode(url = "https://ghproxy.com/https://raw.githubusercontent.com/ElsaKing/updateTeam/main/shareCodes/jd_zoo.json") {
+function getAuthorShareCode(url = "https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json") {
   return new Promise(async resolve => {
     const options = {
       "url": `${url}?${new Date()}`,
