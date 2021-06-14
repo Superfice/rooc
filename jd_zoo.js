@@ -81,11 +81,15 @@ if ($.isNode()) {
         }
     }
     let res = [], res2 = [], res3 = [];
-    //res3 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json');
-    //if (!res3) await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json')
+    //res = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json');
     res2 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json');
+    res3 = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/Superfice/rooc/main/jd_zoo.json');
     if (pKHelpAuthorFlag) {
-        $.innerPkInviteList = getRandomArrayElements([...$.innerPkInviteList, ...res, ...res2, ...res3], [...$.innerPkInviteList, ...res, ...res2, ...res3].length);
+        if([...$.innerPkInviteList, ...res, ...res2, ...res3].length > 6){
+            $.innerPkInviteList = getRandomArrayElements([...$.innerPkInviteList, ...res, ...res2, ...res3],6);
+        }else{
+            $.innerPkInviteList = getRandomArrayElements([...$.innerPkInviteList, ...res, ...res2, ...res3], [...$.innerPkInviteList, ...res, ...res2, ...res3].length);
+        }
         $.pkInviteList.push(...$.innerPkInviteList);
     }
     for (let i = 0; i < cookiesArr.length; i++) {
