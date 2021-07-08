@@ -16,7 +16,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const ShHelpFlag = true;//是否SH助力  true 助力，false 不助力
-const ShHelpAuthorFlag = true;//是否助力作者SH  true 助力，false 不助力
+const ShHelpAuthorFlag = false;//是否助力作者SH  true 助力，false 不助力
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [];
 $.cookie = '';
@@ -353,7 +353,7 @@ async function dealReturn(type, res) {
           console.log(`获得[${res.couponName}]优惠券：${res.usageThreshold} 优惠：${res.quota} 时间：${res.useTimeRange}`);
         }else if(data.data.result.userActBaseVO){
           console.log('结算结果')
-          let res = data.data.result.couponVO
+          let res = data.data.result.userActBaseVO
           console.log(`当前金额：${res.totalMoney}\n${JSON.stringify(res)}`);
         }
       } else if (data.data && data.data.bizMsg) {
