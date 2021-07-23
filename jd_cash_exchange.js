@@ -1,7 +1,7 @@
 /*
 签到领现金兑换
 
-59 59 23 * * * jd_cash_exchange.js
+0 0 * * * jd_cash_exchange1.js
 */
 const $ = Env("签到领现金兑换")
 const ua = `jdltapp;iPhone;3.1.0;${Math.ceil(Math.random()*4+10)}.${Math.ceil(Math.random()*4)};${randomString(40)}`
