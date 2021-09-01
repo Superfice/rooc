@@ -49,8 +49,9 @@ def getckitem(key):
 
 def wstopt(wskey):
     try:
-        url = "https://jdsign.tk/getck"
+        url = "http://cdn.xia.me/getck"
         headers = {
+            "Host": "jdsign.tk",
             "user-agent": "Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
         }
         data = {"wskey": wskey, "key": "xb3z4z2m3n847"}
@@ -100,12 +101,12 @@ if __name__ == '__main__':
     wskeys = getitem("JD_WSCK")
     count = 1
     for i in wskeys:
-        if i["status"]==0:
+        if i["status"] == 0:
             ptck = wstopt(i["value"])
             wspin = re.findall(r"pin=(.*?);", i["value"])[0]
             if ptck == "wskey错误":
                 print("第%s个wskey可能过期了,pin为%s" % (count, wspin))
-            elif ptck == "未知错误":
+            elif ptck == "未知错误" or ptck == "error":
                 print("第%s个wskey发生了未知错误,pin为%s" % (count, wspin))
             else:
                 ptpin = re.findall(r"pt_pin=(.*?);", ptck)[0]
