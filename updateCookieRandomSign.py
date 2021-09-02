@@ -24,10 +24,7 @@ if username == "" or password == "":
 
 # 随机获取sign
 def randomData():
-    dataList = ['clientVersion=10.1.2&build=89743&client=android' \
-          '&d_brand=&d_model=&osVersion=&screen=&partner=&oaid=&openudid=a27b83d3d1dba1cc&eid=&sdkVersion=30&lang' \
-          '=zh_CN&uuid=a27b83d3d1dba1cc&aid=a27b83d3d1dba1cc&area=19_1601_36953_50397&networkType=wifi&wifiBssid=&uts' \
-          '=&uemps=0-2&harmonyOs=0&st=1630413012009&sign=5007129410fde6508ec43dae1aa6a3ca&sv=121',
+    dataList = ['clientVersion=10.1.2&build=89743&client=android&d_brand=HUAWEI&d_model=PRA-AL00&osVersion=8.0.0&screen=1196*720&partner=huawei&oaid=ff5af76f-be3f-b669-da9f-abd5bcff0904&eid=eidAa2e3812137s6+9L4rAqlQ4eLPjp2VZNoRvvS+ierXhDH95z2NPAxYl81oaV3MuNU+081CksSJCDAHOOQe/LUllHy2AfmeHTIYyOgMYdzjS+8vV5i&sdkVersion=26&lang=zh_CN&uuid=5eabf67951f5ee92&aid=5eabf67951f5ee92&area=19_1611_19919_19966&networkType=wifi&wifiBssid=unknown&uts=0f31TVRjBSsqndu4%2FjgUPz6uymy50MQJVloh%2FqRQE4ahde%2BfJ%2BZVVRlDllYpLlX5nvWl9ZDmhhmyyFOVJz0w6Bc%2BCSP1J8DHGYg9TT6hmhtov8wwec0E9Ct%2FBh%2FKOQ9ek5lQJrA4dEgRrfH1%2B6w%2FpTA%2FVxDqwiYhgV52U%2FlbrOhyD9qHJtrkoOm9yB3bITI8C0sI8OtU9fr12NRWBI9hVQ%3D%3D&uemps=0-2&harmonyOs=0&st=1630566465446&sign=bc6c70538763fa3f372e61e6ddc68f44&sv=121',
            'data2', 
            'data3', 
            'data4', 
