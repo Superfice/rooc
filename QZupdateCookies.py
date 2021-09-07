@@ -137,13 +137,13 @@ if __name__ == '__main__':
         login(username, password)
     else:
         s.headers.update({"authorization": "Bearer " + token})
-    count = 0
     wskeys = getitem("JD_WSCK")
+    count = 0
     for i in wskeys:
         count += 1
         wspin = re.findall(r"pin=(.*?);", i["value"])[0]
         if i["status"] == 0:
-            item = getckitem("JD_COOKIE", "pt_pin=" + wspin)
+            item = getckitem("pt_pin=" + wspin)
             if item != []:
                 if checkcookie(item["value"]):
                     ptck = wstopt(i["value"])
