@@ -154,8 +154,6 @@ if __name__ == '__main__':
                     print("第%s个wskey更新成功, pin:%s" % (count, wspin))
                 else:
                     print("第%s个wskey更新失败, pin:%s" % (count, wspin))
-                else:
-                    print("第%s个wskey无需更新, pin:%s" % (count, wspin))
             else:
                 ptck = wstopt(i["value"])
                 if ptck == "error":
