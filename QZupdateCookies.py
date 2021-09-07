@@ -137,24 +137,33 @@ if __name__ == '__main__':
         login(username, password)
     else:
         s.headers.update({"authorization": "Bearer " + token})
+    count = 0
     wskeys = getitem("JD_WSCK")
-    count = 1
     for i in wskeys:
-        if i["status"]==0:
-            ptck = wstopt(i["value"])
-            wspin = re.findall(r"pin=(.*?);", i["value"])[0]
-            item = getckitem("pt_pin=" + wspin)
+        count += 1
+        wspin = re.findall(r"pin=(.*?);", i["value"])[0]
+        if i["status"] == 0:
+            item = getckitem("JD_COOKIE", "pt_pin=" + wspin)
             if item != []:
-                qlid = item["_id"]
-                if update(ptck, qlid):
-                    print("第%s个wskey更新成功, pin:%s" % (count, wspin))
+                if checkcookie(item["value"]):
+                    ptck = wstopt(i["value"])
+                    if ptck == "error":
+                        print("第%s个wskey转换失败, pin:%s" % (count, wspin))
+                    else:
+                        if update(ptck, item["_id"]):
+                            print("第%s个wskey更新成功, pin:%s" % (count, wspin))
+                        else:
+                            print("第%s个wskey更新失败, pin:%s" % (count, wspin))
                 else:
-                    print("第%s个wskey更新失败, pin:%s" % (count, wspin))
+                    print("第%s个wskey无需更新, pin:%s" % (count, wspin))
             else:
-                if insert(ptck):
-                    print("第%s个wskey添加成功" % count)
+                ptck = wstopt(i["value"])
+                if ptck == "error":
+                    print("第%s个wskey转换失败, pin:%s" % (count, wspin))
                 else:
-                    print("第%s个wskey添加失败" % count)
-            count += 1
+                    if insert(ptck):
+                        print("第%s个wskey添加成功, pin:%s" % (count, wspin))
+                    else:
+                        print("第%s个wskey添加失败, pin:%s" % (count, wspin))
         else:
-            print("有一个wskey被禁用了")
+            print("第%s个wskey已禁用, pin:%s" % (count, wspin))
