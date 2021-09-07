@@ -149,7 +149,6 @@ if __name__ == '__main__':
                     ptck = wstopt(i["value"])
                     if ptck == "error":
                         print("第%s个wskey转换失败, pin:%s" % (count, wspin))
-                    else:
                         if update(ptck, item["_id"]):
                     print("第%s个wskey更新成功, pin:%s" % (count, wspin))
                 else:
