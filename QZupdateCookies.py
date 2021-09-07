@@ -32,18 +32,18 @@ def login(username, password):
     s.headers.update({"authorization": "Bearer " + json.loads(r.text)["data"]["token"]})
 
 
-def getitem(searchValue):
-    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (searchValue, gettimestamp())
+def getitem(key):
+    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (key, gettimestamp())
     r = s.get(url)
     item = json.loads(r.text)["data"]
     return item
 
 
-def getckitem(searchValue, value):
-    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (searchValue, gettimestamp())
+def getckitem(key):
+    url = "http://127.0.0.1:5700/api/envs?searchValue=JD_COOKIE&t=%s" % gettimestamp()
     r = s.get(url)
     for i in json.loads(r.text)["data"]:
-        if value in i["value"]:
+        if key in i["value"]:
             return i
     return []
 
