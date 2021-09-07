@@ -32,18 +32,18 @@ def login(username, password):
     s.headers.update({"authorization": "Bearer " + json.loads(r.text)["data"]["token"]})
 
 
-def getitem(key):
-    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (key, gettimestamp())
+def getitem(searchValue):
+    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (searchValue, gettimestamp())
     r = s.get(url)
     item = json.loads(r.text)["data"]
     return item
 
 
-def getckitem(key):
-    url = "http://127.0.0.1:5700/api/envs?searchValue=JD_COOKIE&t=%s" % gettimestamp()
+def getckitem(searchValue, value):
+    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (searchValue, gettimestamp())
     r = s.get(url)
     for i in json.loads(r.text)["data"]:
-        if key in i["value"]:
+        if value in i["value"]:
             return i
     return []
 
@@ -86,19 +86,6 @@ def wstopt(cookies):
         return 'error'
 
 
-def checkcookie(cookies):
-    url = 'https://api.m.jd.com/client.action?functionId=newUserInfo&clientVersion=10.0.9&client=android&openudid=a27b83d3d1dba1cc&uuid=a27b83d3d1dba1cc&aid=a27b83d3d1dba1cc&area=19_1601_36953_50397&st=1626848394828&sign=447ffd52c08f0c8cca47ebce71579283&sv=101&body=%7B%22flag%22%3A%22nickname%22%2C%22fromSource%22%3A1%2C%22sourceLevel%22%3A1%7D&'
-    headers = {
-        'user-agent': 'okhttp/3.12.1;jdmall;android;version/;build/0;screen/1080x1920;os/5.1.1;network/wifi;',
-        'Cookie': cookies,
-    }
-    response = requests.post(url=url, headers=headers, verify=False)
-    data = response.json()
-    if data['code'] == '0':
-        return False
-    else:
-        return True
-
 
 def update(text, qlid):
     url = "http://127.0.0.1:5700/api/envs?t=%s" % gettimestamp()
@@ -137,28 +124,26 @@ if __name__ == '__main__':
         login(username, password)
     else:
         s.headers.update({"authorization": "Bearer " + token})
+    count = 0
     wskeys = getitem("JD_WSCK")
-    count = 1
     for i in wskeys:
-        if i["status"]==0:
-            ptck = wstopt(i["value"])
+        count += 1
+        if i["status"] == 0:
             wspin = re.findall(r"pin=(.*?);", i["value"])[0]
-            item = getckitem("pt_pin=" + wspin)
-            if item != []:
-                        if update(ptck, item["_id"]):
-                    print("第%s个wskey更新成功, pin:%s" % (count, wspin))
-                else:
-                    print("第%s个wskey更新失败, pin:%s" % (count, wspin))
-            else:
-                if checkcookie(item["value"]):
-                ptck = wstopt(i["value"])
-                if ptck == "error":
+            ptck = wstopt(i["value"])
+            if ptck == "error":
                     print("第%s个wskey转换失败, pin:%s" % (count, wspin))
             else:
-                if insert(ptck):
-                    print("第%s个wskey添加成功, pin:%s" % (count, wspin))
+                item = getckitem("JD_COOKIE", "pt_pin=" + wspin)
+                if item != []:
+                    if update(ptck, item["_id"]):
+                        print("第%s个wskey更新成功, pin:%s" % (count, wspin))
+                    else:
+                        print("第%s个wskey更新失败, pin:%s" % (count, wspin))
                 else:
-                    print("第%s个wskey添加失败, pin:%s" % (count, wspin))
-            count += 1
+                    if insert(ptck):
+                        print("第%s个wskey添加成功, pin:%s" % (count, wspin))
+                    else:
+                        print("第%s个wskey添加失败, pin:%s" % (count, wspin))
         else:
             print("第%s个wskey已禁用, pin:%s" % (count, wspin))
