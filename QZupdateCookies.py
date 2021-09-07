@@ -151,19 +151,20 @@ if __name__ == '__main__':
                         print("第%s个wskey转换失败, pin:%s" % (count, wspin))
                 qlid = item["_id"]
                 if update(ptck, qlid):
-                            print("第%s个wskey更新成功, pin:%s" % (count, wspin))
-                        else:
-                            print("第%s个wskey更新失败, pin:%s" % (count, wspin))
+                    print("第%s个wskey更新成功, pin:%s" % (count, wspin))
+                else:
+                    print("第%s个wskey更新失败, pin:%s" % (count, wspin))
                 else:
                     print("第%s个wskey无需更新, pin:%s" % (count, wspin))
             else:
                 ptck = wstopt(i["value"])
                 if ptck == "error":
                     print("第%s个wskey转换失败, pin:%s" % (count, wspin))
+            else:
+                if insert(ptck):
+                    print("第%s个wskey添加成功, pin:%s" % (count, wspin))
                 else:
-                    if insert(ptck):
-                        print("第%s个wskey添加成功, pin:%s" % (count, wspin))
-                    else:
-                        print("第%s个wskey添加失败, pin:%s" % (count, wspin))
+                    print("第%s个wskey添加失败, pin:%s" % (count, wspin))
+            count += 1
         else:
             print("第%s个wskey已禁用, pin:%s" % (count, wspin))
