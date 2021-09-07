@@ -137,11 +137,9 @@ if __name__ == '__main__':
         login(username, password)
     else:
         s.headers.update({"authorization": "Bearer " + token})
-    count = 0
     wskeys = getitem("JD_WSCK")
+    count = 1
     for i in wskeys:
-        count += 1
-        wspin = re.findall(r"pin=(.*?);", i["value"])[0]
         if i["status"]==0:
             ptck = wstopt(i["value"])
             wspin = re.findall(r"pin=(.*?);", i["value"])[0]
