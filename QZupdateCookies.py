@@ -32,18 +32,18 @@ def login(username, password):
     s.headers.update({"authorization": "Bearer " + json.loads(r.text)["data"]["token"]})
 
 
-def getitem(key):
-    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (key, gettimestamp())
+def getitem(searchValue):
+    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (searchValue, gettimestamp())
     r = s.get(url)
     item = json.loads(r.text)["data"]
     return item
 
 
-def getckitem(key):
-    url = "http://127.0.0.1:5700/api/envs?searchValue=JD_COOKIE&t=%s" % gettimestamp()
+def getckitem(searchValue, value):
+    url = "http://127.0.0.1:5700/api/envs?searchValue=%s&t=%s" % (searchValue, gettimestamp())
     r = s.get(url)
     for i in json.loads(r.text)["data"]:
-        if key in i["value"]:
+        if value in i["value"]:
             return i
     return []
 
@@ -137,9 +137,11 @@ if __name__ == '__main__':
         login(username, password)
     else:
         s.headers.update({"authorization": "Bearer " + token})
+    count = 0
     wskeys = getitem("JD_WSCK")
-    count = 1
     for i in wskeys:
+        count += 1
+        wspin = re.findall(r"pin=(.*?);", i["value"])[0]
         if i["status"]==0:
             ptck = wstopt(i["value"])
             wspin = re.findall(r"pin=(.*?);", i["value"])[0]
