@@ -138,11 +138,11 @@ if __name__ == '__main__':
     else:
         s.headers.update({"authorization": "Bearer " + token})
     wskeys = getitem("JD_WSCK")
-    count = 0
+    count = 1
     for i in wskeys:
-        count += 1
-        wspin = re.findall(r"pin=(.*?);", i["value"])[0]
-        if i["status"] == 0:
+        if i["status"]==0:
+            ptck = wstopt(i["value"])
+            wspin = re.findall(r"pin=(.*?);", i["value"])[0]
             item = getckitem("pt_pin=" + wspin)
             if item != []:
                 if checkcookie(item["value"]):
@@ -154,8 +154,6 @@ if __name__ == '__main__':
                             print("第%s个wskey更新成功, pin:%s" % (count, wspin))
                         else:
                             print("第%s个wskey更新失败, pin:%s" % (count, wspin))
-                else:
-                    print("第%s个wskey无需更新, pin:%s" % (count, wspin))
             else:
                 ptck = wstopt(i["value"])
                 if ptck == "error":
